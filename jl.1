@@ -1,0 +1,48 @@
+.TH JL 1
+.SH NAME
+jl
+.SH SYNOPSIS
+.B jl
+.RB [-f\ fieldseparator]
+.RB PATTERN
+.RB [FILE...]
+.SH DESCRIPTION
+.B jl
+converts JSON that matches a
+.I PATTERN
+in each
+.I FILE
+to lines of text. If no
+.I FILE
+is specified it reads from standard input.
+.PP
+The
+.I PATTERN
+syntax resembles the JSON structure it matches:
+.RS
+.PP
+.B {
+match a JSON object
+.PP
+.B [
+match a JSON array
+.PP
+.B *
+match array values
+.PP
+.B ,
+property separator
+.RE
+.PP
+All other characters are interpreted as being part of a JSON property name.
+.PP
+The JSON structure is flatted to lines of text with fields delimited by
+.IR fieldseparator .
+.SH OPTIONS
+.TP
+.B \-f fieldseparator
+The output field separator. The default is "\\t".
+.SH EXAMPLE
+.RS
+jl '{events[{time,desc' data.json
+.RE
