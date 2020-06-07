@@ -168,16 +168,22 @@ int main(int argc, char *argv[])
 	if (!find_root(head))
 		abort();
 
+	Token *t;
+
 	if (argi == argc) {
 		lexer.file = stdin;
-		run_op(head);
-		accept(T_EOF);
+		do {
+			run_op(head);
+			t = peek_token();
+		} while (t->type != T_EOF);
 	}
 	else {
 		for (; argi < argc; argi++) {
 			lexer.file = fopen(argv[argi], "r");
-			run_op(head);
-			accept(T_EOF);
+			do {
+				run_op(head);
+				t = peek_token();
+			} while (t->type != T_EOF);
 			fclose(lexer.file);
 		}
 	}
